@@ -11,13 +11,6 @@ const galleryList = document.querySelector('.gallery');
 
 gallerySetToHtml(createGalleryMarkup(galleryItems));
 
-let lightbox = new SimpleLightbox('.gallery a', {
-  captions: true,
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  captionDelay: 250,
-});
-
 function createGalleryMarkup(galleryItems) {
   return galleryItems
     .map(
@@ -34,5 +27,12 @@ function createGalleryMarkup(galleryItems) {
 function gallerySetToHtml(gallery) {
   galleryList.innerHTML = gallery;
 }
+
+let lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
 
 console.log(galleryItems);
