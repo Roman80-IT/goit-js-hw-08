@@ -10,3 +10,5 @@
 // Додай до проекту бібліотеку lodash.throttle і зроби так, щоб час відтворення оновлювався у сховищі не частіше, ніж раз на секунду.
 
 //! Інсталюємо в терміналі $ npm install @vimeo/player (документація  https://github.com/vimeo/player.js/#vimeo-player-api )
+
+import Player from '@vimeo/player';
