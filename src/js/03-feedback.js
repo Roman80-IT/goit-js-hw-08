@@ -20,11 +20,9 @@ const $form = document.querySelector('.feedback-form');
 const $emailInput = document.querySelector('input[name="email"]');
 const $messageInput = document.querySelector('textarea[name="message"]');
 
-//* Ключ для збереження даних у лок. сховищі
-const FORM_LOCAL_STORAGE_KEY = 'feedback-form-state';
+const FORM_LOCAL_STORAGE_KEY = 'feedback-form-state'; //* Ключ для збереження даних у лок. сховищі
 
-//* Об'єкт для збереження даних форми
-let formData = {};
+let formData = {}; //* Об'єкт для збереження даних форми
 
 //* Ф-ція, яка буде викликатись при завантаженні сторінки
 const onLoad = () => {
@@ -50,7 +48,7 @@ const handleInput = event => {
 
 //* Ф-ція, яка буде викликатись при відправці форми
 const handleSubmit = event => {
-  event.preventDefault();
+  event.preventDefault(); //* щоб уникнути типової дії для сабміту форми (перезавантаження сторінки)
 
   //* Перевірка, чи всі поля форми заповнені
   const isFormFilled = Object.values(formData).every(
