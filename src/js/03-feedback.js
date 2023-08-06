@@ -142,7 +142,7 @@ window.addEventListener('load', onLoad);
 //     //* Обнулення об'єкту formData
 //     formData = {};
 //   } else {
-//     //* Виведення повідомлення, якщо не всі поля заповнені
+//     //* Альорт, якщо не всі поля заповнені
 //     alert('Please complete all fields of the form before submitting.');
 //   }
 // });
