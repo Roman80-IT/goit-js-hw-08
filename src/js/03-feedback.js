@@ -191,7 +191,7 @@ const handleSubmit = event => {
     console.log(formData);
     //* Очищення полів форми
     $form.reset();
-    //* Видалення даних з локального сховища
+    //* Видалення даних з лок. сховища
     localStorage.removeItem(FORM_LOCAL_STORAGE_KEY);
     //* Очищення об'єкту formData
     formData = {};
