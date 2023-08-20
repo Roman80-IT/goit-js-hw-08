@@ -19,17 +19,17 @@ const $form = document.querySelector('.feedback-form');
 const $emailInput = document.querySelector('input[name="email"]');
 const $messageInput = document.querySelector('textarea[name="message"]');
 
-const FORM_LOCAL_STORAGE_KEY = 'feedback-form-state'; //* Ключ для збереження даних у лок. сховищі
+const FORM_LOCAL_STORAGE_KEY = 'feedback-form-state';
 
-let formData = {}; //* Об'єкт для збереження даних форми
+let formData = {};
 
-//* Ф-ція, яка буде викликатись при завантаженні сторінки
+//* Ф-ція, при завантаженні сторінки
 const onLoad = () => {
   try {
     const formDataJSON = localStorage.getItem(FORM_LOCAL_STORAGE_KEY);
     if (formDataJSON) {
       formData = JSON.parse(formDataJSON);
-
+      //* Заповнення полів форми зі збереженими даними
       $emailInput.value = formData.email || '';
       $messageInput.value = formData.message || '';
     }
@@ -44,22 +44,17 @@ const handleInput = event => {
   saveFormDataToLocalStorage();
 };
 
-//* Ф-ція, при відправці форми
 const handleSubmit = event => {
-  event.preventDefault(); /
+  event.preventDefault();
 
-  //* Перевірка, чи заповнені поля форми 
   const isFormFilled = Object.values(formData).every(
     value => value.trim() !== ''
   );
 
   if (isFormFilled) {
     console.log(formData);
-    
     $form.reset();
-    
     localStorage.removeItem(FORM_LOCAL_STORAGE_KEY);
-    
     formData = {};
   } else {
     alert('Please complete all fields of the form before submitting');
@@ -71,9 +66,7 @@ const saveFormDataToLocalStorage = throttle(() => {
   localStorage.setItem(FORM_LOCAL_STORAGE_KEY, JSON.stringify(formData));
 }, 500);
 
-//* Додавання обробників подій до форми
 $form.addEventListener('input', handleInput);
 $form.addEventListener('submit', handleSubmit);
 
-//* Додаємо обробник події 'load' до вікна, який викличе ф-цію onLoad при завантаженні сторінки
 window.addEventListener('load', onLoad);
