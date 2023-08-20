@@ -49,8 +49,105 @@
 //   localStorage.setItem(FEEDBACK_FORM_KEY, JSON.stringify(data));
 // }
 
+//! -------------------------   Existing O   -------------------------
+
+// import throttle from 'lodash.throttle';
+
+// const $form = document.querySelector('.feedback-form');
+// const $emailInput = document.querySelector('input[name="email"]');
+// const $messageInput = document.querySelector('textarea[name="message"]');
+
+// const formValue = {};
+
+// if (localStorage.getItem('$feedback-form-state')) {
+//   const currentFeedbackFormStateValue = localStorage.getItem(
+//     '$feedback-form-state'
+//   );
+//   if (JSON.parse(currentFeedbackFormStateValue).email) {
+//     const currentEmailValue = JSON.parse(
+//       localStorage.getItem('$feedback-form-state')
+//     ).email;
+//     $emailInput.value = currentEmailValue;
+//     formValue.email = currentEmailValue;
+//   }
+
+//   if (JSON.parse(currentFeedbackFormStateValue).message) {
+//     const currentMessageValue = JSON.parse(
+//       localStorage.getItem('$feedback-form-state')
+//     ).message;
+//     $messageInput.value = currentMessageValue;
+//     formValue.message = currentMessageValue;
+//   }
+// }
+
+// $form.addEventListener(
+//   'input',
+//   throttle(event => {
+//     formValue[event.target.name] = event.target.value;
+//     localStorage.setItem('$feedback-form-state', JSON.stringify(formValue));
+//   }, 500)
+// );
+
+// $form.addEventListener('submit', event => {
+//   event.preventDefault();
+//   console.log(formValue);
+//   localStorage.removeItem('$feedback-form-state');
+//   $emailInput.value = '';
+//   $messageInput.value = '';
+// });
+
 //! -------------------------   ВАРІАНТ 2   -------------------------
 
+//* Відправляємо сабміт лише в тому випадку, якщо заповнені всі поля форми, інакше показуємо альорт як ми робили у 6-му дз таск 8,
+//* якщо все заповнено  дані збираємо в іменований обʼєкт, виводимо його в консоль, чистимо локал сторедж по ключу, очищаємо форму та обнулюємо обʼєкт.
+//*      в консоль виводимо лише якщо все заповнено
+
+// import throttle from 'lodash.throttle';
+
+// const $form = document.querySelector('.feedback-form');
+// $form.addEventListener('input', throttle(handleInput, 1000));
+// $form.addEventListener('submit', handleSubmit);
+
+// const FEEDBACK_FORM_KEY = 'feedback-form-state';
+// let formData = {};
+
+// const onLoad = () => {
+//   try {
+//     const formDataJSON = localStorage.getItem(FEEDBACK_FORM_KEY);
+//     if (!formDataJSON) return;
+//     formData = JSON.parse(formDataJSON);
+//     Object.entries(formData).forEach(([key, val]) => {
+//       $form.elements[key].value = val;
+//     });
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+
+// window.addEventListener('load', onLoad);
+
+// function handleInput(event) {
+//   formData[event.target.name] = event.target.value.trim();
+// }
+
+// function handleSubmit(event) {
+//   event.preventDefault();
+//   const isFormFilled = Object.keys(formData).every(key => formData[key] !== '');
+//   if (isFormFilled) {
+//     console.log(formData);
+//     formData = {};
+//     $form.reset();
+//     localStorage.removeItem(FEEDBACK_FORM_KEY);
+//   } else {
+//     alert('Будь ласка, заповніть всі поля форми перед відправкою.');
+//   }
+// }
+
+// function saveFormDataToLocalStorage() {
+//   localStorage.setItem(FEEDBACK_FORM_KEY, JSON.stringify(formData));
+// }
+
+//! ------------------- ВАРІАНТ 2 P -------------------
 //* Відправляємо сабміт лише в тому випадку, якщо заповнені всі поля форми, інакше показуємо альорт як ми робили у 6-му дз таск 8,
 //* якщо все заповнено  дані збираємо в іменований обʼєкт, виводимо його в консоль, чистимо локал сторедж по ключу, очищаємо форму та обнулюємо обʼєкт.
 //*      в консоль виводимо лише якщо все заповнено
@@ -128,7 +225,7 @@
 //   localStorage.setItem(FEEDBACK_FORM_KEY, JSON.stringify(formData));
 // }
 
-//! -------------------------   ВАРІАНТ 2а   -------------------------
+//! -------------------------   ВАРІАНТ 2а P  -------------------------
 
 import throttle from 'lodash.throttle';
 
@@ -196,6 +293,67 @@ $form.addEventListener('submit', handleSubmit);
 
 //* Додаємо обробник події 'load' до вікна, який викличе ф-цію onLoad при завантаженні сторінки
 window.addEventListener('load', onLoad);
+
+//! -------------------------   ВАРІАНТ 2а  -------------------------
+
+// import throttle from 'lodash.throttle';
+
+// const $form = document.querySelector('.feedback-form');
+// const $emailInput = document.querySelector('input[name="email"]');
+// const $messageInput = document.querySelector('textarea[name="message"]');
+
+// const FORM_LOCAL_STORAGE_KEY = 'feedback-form-state';
+
+// let formData = {};
+
+// //* Ф-ція, при завантаженні сторінки
+// const onLoad = () => {
+//   try {
+//     const formDataJSON = localStorage.getItem(FORM_LOCAL_STORAGE_KEY);
+//     if (formDataJSON) {
+//       formData = JSON.parse(formDataJSON);
+//       //* Заповнення полів форми зі збереженими даними
+//       $emailInput.value = formData.email || '';
+//       $messageInput.value = formData.message || '';
+//     }
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+
+// //* Ф-ція, при введенні даних в поля форми
+// const handleInput = event => {
+//   formData[event.target.name] = event.target.value.trim();
+//   saveFormDataToLocalStorage();
+// };
+
+// const handleSubmit = event => {
+//   event.preventDefault();
+
+//   const isFormFilled = Object.values(formData).every(
+//     value => value.trim() !== ''
+//   );
+
+//   if (isFormFilled) {
+//     console.log(formData);
+//     $form.reset();
+//     localStorage.removeItem(FORM_LOCAL_STORAGE_KEY);
+//     formData = {};
+//   } else {
+//     alert('Please complete all fields of the form before submitting');
+//   }
+// };
+
+// //* Ф-ція для збереження даних форми у лок. сховище
+// const saveFormDataToLocalStorage = throttle(() => {
+//   localStorage.setItem(FORM_LOCAL_STORAGE_KEY, JSON.stringify(formData));
+// }, 500);
+
+// $form.addEventListener('input', handleInput);
+// $form.addEventListener('submit', handleSubmit);
+
+// window.addEventListener('load', onLoad);
+
 
 //! -------------------------   ВАРІАНТ 3   -------------------------
 

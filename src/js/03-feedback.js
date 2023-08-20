@@ -11,7 +11,7 @@
 //*    3. Під час сабміту форми очищуй сховище і поля форми, а також виводь у консоль об'єкт з полями email, message та їхніми поточними значеннями.
 //*    4. Зроби так, щоб сховище оновлювалось не частіше, ніж раз на 500 мілісекунд. Для цього додай до проекту і використовуй бібліотеку lodash.throttle.
 
-//! -------------------------   ВАРІАНТ 2а   -------------------------
+//! -------------------------   ВАРІАНТ 2б   -------------------------
 
 import throttle from 'lodash.throttle';
 
@@ -47,18 +47,15 @@ const handleInput = event => {
 const handleSubmit = event => {
   event.preventDefault();
 
-  const isFormFilled = Object.values(formData).every(
-    value => value.trim() !== ''
-  );
-
-  if (isFormFilled) {
-    console.log(formData);
-    $form.reset();
-    localStorage.removeItem(FORM_LOCAL_STORAGE_KEY);
-    formData = {};
-  } else {
-    alert('Please complete all fields of the form before submitting');
+  if ($emailInput.value === '' || $messageInput.value === '') {
+    alert('Всі поля повинні бути заповнені');
+    return;
   }
+
+  console.log(formData);
+  $form.reset();
+  localStorage.removeItem(FORM_LOCAL_STORAGE_KEY);
+  formData = {};
 };
 
 //* Ф-ція для збереження даних форми у лок. сховище
